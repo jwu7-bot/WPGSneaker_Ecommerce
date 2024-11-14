@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  resources :pages
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+  resources :pages
+  get "pages/:permalink" => "pages#permalink", as: :pages_permalink
+
+  root to: "products#index"
 
   resources :categories, only: [ :index, :show ]
   resources :products, only: [ :index, :show ]
