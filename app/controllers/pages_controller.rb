@@ -27,7 +27,7 @@ class PagesController < InheritedResources::Base
 
     respond_to do |format|
       if @page.save
-        format.html { redirect_to pages_path, notice: "Page was successfully created." }
+        format.html { redirect_to page_permalink_path(@page.permalink), notice: "Page was successfully created." }
         format.json { render :show, status: :created, location: @page }
       else
         format.html { render :new }
