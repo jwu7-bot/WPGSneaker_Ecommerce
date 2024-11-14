@@ -80,18 +80,18 @@ end
 Page.create(
   title: "About Us",
   content: "Welcome to WPGSnearker! Your go-to destination for premium footwear and clothing!",
-  perma_link: "about_us")
+  permalink: "about_us")
 
 Page.create(
   title: "Contact Us",
   content: "Conta me at jwu7@rrc.ca",
-  perma_link: "contact_us"
+  permalink: "contact_us"
 )
 
 
 puts "There are #{Category.count} Categories."
 puts "There are #{Product.count} Products."
-puts "There are #{Pages.count} Pages."
+puts "There are #{Page.count} Pages."
 
 if Rails.env.development?
   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
