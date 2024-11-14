@@ -1,7 +1,8 @@
 require "csv"
 
-Product.destroy_all
-Category.destroy_all
+Product.delete_all
+Category.delete_all
+Page.delete_all
 
 # Categories with products
 categories_with_products = {
@@ -76,8 +77,21 @@ products.each do |product|
   )
 end
 
-puts "Created #{Category.count} Categories."
-puts "Created #{Product.count} Products."
+Page.create(
+  title: "About Us",
+  content: "Welcome to WPGSnearker! Your go-to destination for premium footwear and clothing!",
+  perma_link: "about_us")
+
+Page.create(
+  title: "Contact Us",
+  content: "Conta me at jwu7@rrc.ca",
+  perma_link: "contact_us"
+)
+
+
+puts "There are #{Category.count} Categories."
+puts "There are #{Product.count} Products."
+puts "There are #{Pages.count} Pages."
 
 if Rails.env.development?
   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
