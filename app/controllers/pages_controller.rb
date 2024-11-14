@@ -1,6 +1,6 @@
 class PagesController < InheritedResources::Base
+  before_action :set_page, only: %i[ edit update destroy ]
   http_basic_authenticate_with name: "admin", password: "password", except: [ :permalink ]
-  before_action :set_page, only: %i[show edit update destroy]
 
   # GET /pages
   # GET /pages.json
