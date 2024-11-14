@@ -1,2 +1,13 @@
-<h1>Categories#show</h1>
-<p>Find me in app/views/categories/show.html.erb</p>
+<h1><%= @category.name %> Products</h1>
+
+<% if @products.any? %>
+  <div class="products-list">
+    <% @products.each do |product| %>
+    <div class="product-item">
+      <h2><%= link_to product.name, product_path(product) %></h2>
+    <% end %>
+  </div>
+  <%= paginate @products %>
+<% else %>
+  <p>No products found in this category.</p>
+<% end %>
