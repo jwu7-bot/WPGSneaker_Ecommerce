@@ -3,9 +3,11 @@
 <% if @products.any? %>
   <div>
   <% @products.each do |product| %>
-    <div>
-      <p><strong><%= link_to product.name, product_path(product) %></strong></p>
-    </div>
+    <% if product.stock_quantity > 0 %>
+      <div>
+        <p><strong><%= link_to product.name, product_path(product) %></strong></p>
+      </div>
+    <% end %>
   <% end %>
   </div>
   <%= paginate @products %>
