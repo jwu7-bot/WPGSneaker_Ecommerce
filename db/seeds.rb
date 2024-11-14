@@ -1,3 +1,5 @@
+require "csv"
+
 Product.destroy_all
 Category.destroy_all
 
@@ -32,7 +34,6 @@ categories_with_products = {
     { name: "Lululemon ABC Pant Slim", price: 14000, stock_quantity: 20, description: "High-quality slim-fit pants designed with stretch fabric, ideal for both work and casual wear." }
   ]
 }
-
 # Loop through each category
 categories_with_products.each do |category_name, products|
   # Create or find the category
@@ -48,6 +49,31 @@ categories_with_products.each do |category_name, products|
       category: category
     )
   end
+end
+
+# CSV file
+filename = Rails.root.join("db/products.csv")
+puts "Loading data from this file: #{filename}"
+
+# Read
+csv_data = File.read(filename)
+
+# Parse headers
+products = CSV.parse(csv_data, headers: true, encoding: "utf-8")
+
+# Loop through each product in csv
+products.each do |product|
+  # Create categories
+  category = Category.find_or_create_by(name: product["category"])
+
+  # Create products
+  Product.create(
+      name: product["name"],
+      price: product["price"],
+      stock_quantity: product["stock_quantity"],
+      description: product["description"],
+      category: category
+  )
 end
 
 puts "Created #{Category.count} Categories."
