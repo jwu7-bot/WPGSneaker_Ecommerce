@@ -1,10 +1,23 @@
 require "csv"
 require "open-uri"
 require "json"
+require 'image_processing/mini_magick'
 
-Product.delete_all
-Category.delete_all
-Page.delete_all
+Product.destroy_all
+Category.destroy_all
+Page.destroy_all
+
+def download_and_resize_image(url, width, height)
+  file = URI.open(url)
+  # Resize the image to the specified dimensions
+  ImageProcessing::MiniMagick
+    .source(file)
+    .resize_to_limit(width, height)
+    .call
+rescue OpenURI::HTTPError => e
+  puts "Failed to download image #{url}: #{e.message}"
+  nil
+end
 
 # Categories with products
 categories_with_products = {
@@ -85,14 +98,22 @@ products.take(100).each do |product|
       # Get the first image URL
       first_image_url = image_urls.first
 
-      # Validate the URL
+      # Validate and resize the URL
       if first_image_url.present?
-        file = URI.open(first_image_url)
-        p.image.attach(io: file, filename: File.basename(URI.parse(first_image_url).path))
+
+        # Resize to 300x300
+        resized_image = download_and_resize_image(first_image_url, 300, 300)
+
+        # Attach the resized image to the product
+        if resized_image
+          p.image.attach(
+            io: File.open(resized_image.path),
+            filename: File.basename(URI.parse(first_image_url).path),
+            content_type: 'image/jpeg'
+          )
+        end
       end
 
-    rescue OpenURI::HTTPError => e
-      puts "Failed to download image #{first_image_url} for product #{p.name}: #{e.message}"
     rescue JSON::ParserError => e
       puts "Failed to parse image URLs for product #{p.name}: #{e.message}"
     rescue => e
@@ -113,7 +134,6 @@ Page.find_or_create_by(
   content: "Conta me at jwu7@rrc.ca",
   permalink: "contact_us"
 )
-
 
 puts "There are #{Category.count} Categories."
 puts "There are #{Product.count} Products."
