@@ -44,7 +44,7 @@ categories_with_products.each do |category_name, products|
 
   # Create each product from each categorys
   products.each do |product_data|
-    Product.create(
+    Product.find_or_create_by(
       name: product_data[:name],
       price: product_data[:price],
       stock_quantity: product_data[:stock_quantity],
@@ -63,12 +63,12 @@ csv_data = File.read(filename)
 products = CSV.parse(csv_data, headers: true, encoding: "utf-8")
 
 # Loop through each product in CSV
-products.take(80).each do |product|
+products.take(100).each do |product|
   # Create or find the category
   category = Category.find_or_create_by(name: "Sneakers")
 
   # Create the product
-  p = Product.create!(
+  p = Product.find_or_create_by(
     name: product["product_name"],
     price: product["sale_price"],
     stock_quantity: 20,
@@ -89,9 +89,6 @@ products.take(80).each do |product|
       if first_image_url.present?
         file = URI.open(first_image_url)
         p.image.attach(io: file, filename: File.basename(URI.parse(first_image_url).path))
-        puts "Successfully attached image to product #{p.name}"
-      else
-        puts "No valid URL found for product #{p.name}"
       end
 
     rescue OpenURI::HTTPError => e
@@ -106,12 +103,12 @@ products.take(80).each do |product|
   end
 end
 
-Page.create(
+Page.find_or_create_by(
   title: "About Us",
   content: "Welcome to WPGSnearker! Your go-to destination for premium footwear and clothing!",
   permalink: "about_us")
 
-Page.create(
+Page.find_or_create_by(
   title: "Contact Us",
   content: "Conta me at jwu7@rrc.ca",
   permalink: "contact_us"
