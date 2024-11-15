@@ -3,6 +3,10 @@
 <div>
   <p><strong>Description:</strong> <%= @product.description %></p>
   <p><strong>Price:</strong> <%= number_to_currency @product.price / 100.0%></p>
+
+  <% if @product.image.attached? %>
+    <%= image_tag @product.resized_image(300, 300) %>
+  <% end %>
 </div>
 
 <%= link_to "Back to All Products", products_path %>
