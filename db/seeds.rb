@@ -1,4 +1,6 @@
 require "csv"
+require "open-uri"
+require "json"
 
 Product.delete_all
 Category.delete_all
@@ -53,28 +55,55 @@ categories_with_products.each do |category_name, products|
 end
 
 # CSV file
-filename = Rails.root.join("db/products.csv")
+filename = Rails.root.join("db/nike_shoes.csv")
 puts "Loading data from this file: #{filename}"
 
-# Read
+# Read CSV data
 csv_data = File.read(filename)
-
-# Parse headers
 products = CSV.parse(csv_data, headers: true, encoding: "utf-8")
 
-# Loop through each product in csv
-products.each do |product|
-  # Create categories
-  category = Category.find_or_create_by(name: product["category"])
+# Loop through each product in CSV
+products.take(80).each do |product|
+  # Create or find the category
+  category = Category.find_or_create_by(name: "Sneakers")
 
-  # Create products
-  Product.create(
-      name: product["name"],
-      price: product["price"],
-      stock_quantity: product["stock_quantity"],
-      description: product["description"],
-      category: category
+  # Create the product
+  p = Product.create!(
+    name: product["product_name"],
+    price: product["sale_price"],
+    stock_quantity: 20,
+    description: product["description"],
+    category: category
   )
+
+  # Attach only the first image
+  if product["images"].present?
+    begin
+      # Parse the JSON string to get the array of URLs
+      image_urls = JSON.parse(product["images"].gsub('""', '"')) # Fixes the escaped double quotes
+
+      # Get the first image URL
+      first_image_url = image_urls.first
+
+      # Validate the URL
+      if first_image_url.present?
+        file = URI.open(first_image_url)
+        p.image.attach(io: file, filename: File.basename(URI.parse(first_image_url).path))
+        puts "Successfully attached image to product #{p.name}"
+      else
+        puts "No valid URL found for product #{p.name}"
+      end
+
+    rescue OpenURI::HTTPError => e
+      puts "Failed to download image #{first_image_url} for product #{p.name}: #{e.message}"
+    rescue JSON::ParserError => e
+      puts "Failed to parse image URLs for product #{p.name}: #{e.message}"
+    rescue => e
+      puts "An unexpected error occurred for product #{p.name}: #{e.message}"
+    end
+  else
+    puts "No images provided for product #{p.name}"
+  end
 end
 
 Page.create(
