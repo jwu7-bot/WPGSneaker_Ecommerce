@@ -369,7 +369,7 @@ DEPENDENCIES
   capybara
   debug
   devise
-  error_highlight (>= 0.4.0)
+  error_highlight (>= 0.6.0)
   faker!
   image_processing
   importmap-rails

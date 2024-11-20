@@ -7,6 +7,11 @@
       <div>
         <p><strong><%= link_to product.name, product_path(product) %></strong></p>
       </div>
+      <% if product.image.attached? %>
+        <%= image_tag product.image %>
+      <% else %>
+        <%= image_tag asset_path("no_image.jpg"), size: "240x300"  %>
+      <% end %>
     <% end %>
   <% end %>
   </div>
