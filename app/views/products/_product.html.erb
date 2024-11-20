@@ -1,0 +1,10 @@
+<aside>
+  <% if product.image.attached? %>
+    <%= image_tag product.image %>
+  <% else %>
+    <%= image_tag asset_path('no_image.jpg'), size: "240x300"  %>
+  <% end %>
+  <h3><%= link_to product.name, product %></h3>
+  <p>Price: <%= number_to_currency product.price / 100.0 %></p>
+  <p><%= product.description %></p>
+</aside>

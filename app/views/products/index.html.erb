@@ -1,21 +1,7 @@
-<h1>All Products</h1>
+<h1>Products</h1>
 
-<% if @products.any? %>
-  <div>
-  <% @products.each do |product| %>
-    <% if product.stock_quantity > 0 %>
-      <div>
-        <p><strong><%= link_to product.name, product_path(product) %></strong></p>
-      </div>
-      <% if product.image.attached? %>
-        <%= image_tag product.image %>
-      <% else %>
-        <%= image_tag asset_path("no_image.jpg"), size: "240x300"  %>
-      <% end %>
-    <% end %>
-  <% end %>
-  </div>
-  <%= paginate @products %>
-<% else %>
-  <p>No products available.</p>
-<% end %>
+<section>
+  <%= render @products %>
+<section>
+
+<%= paginate @products %>
