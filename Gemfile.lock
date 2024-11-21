@@ -368,7 +368,6 @@ DEPENDENCIES
   devise
   error_highlight (~> 0.6.0)
   faker!
-  ffi (< 1.17.0)
   image_processing
   importmap-rails
   jbuilder
@@ -383,7 +382,6 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
-  stringio (= 3.1.2)
   turbo-rails
   tzinfo-data
   web-console
