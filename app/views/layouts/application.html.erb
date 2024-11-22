@@ -31,7 +31,8 @@
                 <ul>
                   <% cart.each do |product| %>
                     <li>
-                      <%= link_to '❌', cart_path(product.id), method: :delete, data: { confirm: "Are you sure?" } %> <%= product.name %>
+                      <%= button_to '❌', cart_path(product.id), method: :delete %>
+                      <%= product.name %>
                     </li>
                   <% end %>
                 </ul>
@@ -48,5 +49,29 @@
       <% end %>
       <%= yield %>
     </main>
+    <footer>
+      <details>
+        <summary>
+            Cart
+            <% if cart.present? %>
+              <sup><%= cart.size %></sup>
+            <% end %>
+        </summary>
+        <% if cart.present? %>
+          <ul>
+            <% cart.each do |product| %>
+            <li>
+              <%= button_to '❌', cart_path(product.id), method: :delete %>
+              <%= product.name %>
+            </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No items in your cart.</p>
+        <% end %>
+      </details>
+      <hr>
+      <p><span>👟</span> WPGSneaker <span>👟</span> - Copywrong <%= Time.current.year %></p>
+    </footer>
   </body>
 </html>
