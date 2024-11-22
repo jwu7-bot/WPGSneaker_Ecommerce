@@ -7,4 +7,8 @@
   <h3><%= link_to product.name, product %></h3>
   <p>Price: <%= number_to_currency product.price / 100.0 %></p>
   <p><%= product.description %></p>
+  <%= form_with url: cart_index_path do %>
+    <%= hidden_field_tag(:id, product.id) %>
+    <%= button_tag "Add to cart" %>
+  <% end %>
 </aside>
