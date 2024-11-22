@@ -16,8 +16,12 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
-    <%= yield %>
+    <main>
+      <section>
+        <p>You have visited the site <%= pluralize visit_count, "time" %></p>
+      </section>
+      <%= yield %>
+    </main>
   </body>
 </html>
