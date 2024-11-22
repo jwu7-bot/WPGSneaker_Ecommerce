@@ -18,7 +18,8 @@ class CartController < ApplicationController
     # DELETE /cart/:id, so the id will come from the path
     # and is accessible via the params[:id]
     product_id = params[:id].to_i
-    if session [ :cart ].include?(product_id)
+
+    if session[:cart].include?(product_id)
       session[:cart].delete(product_id)
       flash[:notice] = "Item was removed from cart!"
     end
