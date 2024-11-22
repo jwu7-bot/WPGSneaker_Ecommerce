@@ -3,7 +3,14 @@ class CartController < ApplicationController
     # add an item to the cart
     # POST /cart the post data will be in params, so we can access
     # the product id via params[:id]
-    logger.debug("Adding id #{params["id"]} to the cart")
+    product_id = params[:id].to_i
+
+    unless session[:cart].include?(product_id)
+      session[:cart] << product_id
+      flash[:notice] = "Item added to cart"
+    end
+
+    redirect_to root_path
   end
 
   def destroy
