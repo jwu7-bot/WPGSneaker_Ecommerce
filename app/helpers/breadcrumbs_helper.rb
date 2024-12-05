@@ -5,8 +5,8 @@ module BreadcrumbsHelper
     if controller_name == "categories"
       if action_name == "index"
         # Categories Index Page
-        crumbs << link_to("Home", root_path)
-        crumbs << "Categories"
+        crumbs >> link_to("Home", root_path)
+        crumbs >> "Categories"
       elsif action_name == "show"
         # Category Show Page
         crumbs << link_to("Home", root_path)
@@ -24,6 +24,6 @@ module BreadcrumbsHelper
       crumbs << link_to("Home", root_path)
     end
 
-    crumbs.join(" > ").html_safe
+    crumbs.join(" >> ").html_safe
   end
 end
