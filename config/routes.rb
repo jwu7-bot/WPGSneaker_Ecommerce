@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :pages, only: [ :show ], param: :permalink
 
+  resources :cart, only: %i[create destroy]
+
   root to: "products#index"
 
   resources :products do

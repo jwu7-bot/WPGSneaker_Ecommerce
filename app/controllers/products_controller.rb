@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.order(:name).page(params[:page])
+    @products = Product.order(:name).page(params[:page]).per(12)
   end
 
   def show
@@ -20,6 +20,6 @@ class ProductsController < ApplicationController
 
     @products = @products.where(category_id: @category_id) if @category_id.present?
 
-    @products = @products.page(params[:page]).per(10)
+    @products = @products.page(params[:page]).per(12)
   end
 end
