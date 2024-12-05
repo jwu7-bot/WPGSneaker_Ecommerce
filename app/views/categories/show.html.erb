@@ -1,15 +1,17 @@
 <h1><%= @category.name %> Products</h1>
 
-<% if @products.any? %>
-  <div>
-    <% @products.each do |product| %>
+<aside>
+  <% if @products.any? %>
     <div>
-      <p><strong><%= link_to product.name, product_path(product) %></strong></p>
-    <% end %>
-  </div>
-  <%= paginate @products %>
-<% else %>
-  <p>No products found in this category.</p>
-<% end %>
+      <% @products.each do |product| %>
+      <div>
+        <p><strong><%= link_to product.name, product %></strong></p>
+      <% end %>
+    </div>
+    <%= paginate @products %>
+  <% else %>
+    <p>No products found in this category.</p>
+  <% end %>
+</aside>
 
 <%= link_to "Back to All Categories", categories_path %>
