@@ -2,8 +2,10 @@ require "image_processing/mini_magick"
 
 class Product < ApplicationRecord
   belongs_to :category
+
   has_many :orders
   has_many :carts, through: :orders
+
   has_one_attached :image
 
   validates :name, presence: true, uniqueness: true

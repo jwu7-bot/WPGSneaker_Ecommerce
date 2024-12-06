@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :set_render_cart
+  before_action :initialize_cart
 
   def set_render_cart
     @render_cart = true
