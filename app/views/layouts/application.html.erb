@@ -19,60 +19,12 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <header>
-      <header>
-        <nav>
-          <%= link_to image_tag("logo.jpg", width: 100), root_path %>
-          <ul>
-            <li>
-              Cart
-              <% if cart.present? %>
-                <sup><%= cart.size %></sup>
-                <ul>
-                  <% cart.each do |product| %>
-                    <li>
-                      <%= button_to '❌', cart_path(product.id), method: :delete %>
-                      <%= product.name %>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
-            </li>
-          </ul>
-        </nav>
-      <h1><%= link_to "WPGSneaker", root_path %></h1>
-      <h3>Buy Buy Buy</h3>
-    </header>
     <main>
-      <% if flash[:notice] %>
-        <p><%= flash[:notice] %></p>
-      <% end %>
+      <%= render partial: "cart/cart" if @render_cart %>
+
       <%= breadcrumbs %>
+
       <%= yield %>
     </main>
-    <footer>
-      <details>
-        <summary>
-            Cart
-            <% if cart.present? %>
-              <sup><%= cart.size %></sup>
-            <% end %>
-        </summary>
-        <% if cart.present? %>
-          <ul>
-            <% cart.each do |product| %>
-            <li>
-              <%= button_to '❌', cart_path(product.id), method: :delete %>
-              <%= product.name %>
-            </li>
-            <% end %>
-          </ul>
-        <% else %>
-          <p>No items in your cart.</p>
-        <% end %>
-      </details>
-      <hr>
-      <p><span>👟</span> WPGSneaker <span>👟</span> - Copywrong <%= Time.current.year %></p>
-    </footer>
   </body>
 </html>
