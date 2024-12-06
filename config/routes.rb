@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   resources :pages, only: [ :show ], param: :permalink
 
+  get "cart",  to: "cart#show"
+  get "cart/add"
+  get "cart/remove"
+
   resources :cart, only: %i[create destroy]
 
   root to: "products#index"
