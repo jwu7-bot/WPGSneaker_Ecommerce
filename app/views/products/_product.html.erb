@@ -7,4 +7,10 @@
   <h3><%= link_to product.name, product %></h3>
   <p>Price: <%= number_to_currency product.price / 100.0 %></p>
   <p><%= product.description %></p>
+
+  <%= form_with(url: cart_add_path) do |f| %>
+    <%= f.hidden_field :id, value: product.id %>
+    <%= f.number_field :quantity, value: 0, min: 1 %>
+    <%= f.submit "Add to Cart" %>
+  <% end %>
 </aside>
