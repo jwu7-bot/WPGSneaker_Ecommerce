@@ -13,6 +13,7 @@ class CartController < ApplicationController
       current_order.destroy
     else
       @cart.orders.create(product: @product, quantity:)
+      flash[:notice] = "Added to the cart"
     end
 
     redirect_to root_path

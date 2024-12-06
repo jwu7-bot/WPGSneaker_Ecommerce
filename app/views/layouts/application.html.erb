@@ -22,6 +22,10 @@
     <main>
       <%= render partial: "cart/cart" if @render_cart %>
 
+      <% if flash[:notice] %>
+        <h3><%= flash[:notice] %></h3>
+      <% end %>
+      
       <%= breadcrumbs %>
 
       <%= yield %>
